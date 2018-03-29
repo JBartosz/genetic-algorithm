@@ -56,7 +56,7 @@ namespace JGen
 
         public void RunWithIterations()
         {
-            for(int i = 0; i < (int)_genConfiguration.ConditionValue; ++i)
+            for(UInt64 i = 0; i < (UInt64)_genConfiguration.ConditionValue; ++i)
             {
                 GeneticOperations();
             }

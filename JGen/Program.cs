@@ -108,8 +108,8 @@ namespace JGen
                 Multiply = 1,
                 Mutation = 50,
                 Crossing = 100,
-                StopConditionIndex = 3,
-                ConditionValue = 210
+                StopConditionIndex = 1,
+                ConditionValue = 999999999999999999
             };
 
             dataConfiguration.PrintDataConfiguration();
