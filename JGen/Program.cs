@@ -109,17 +109,38 @@ namespace JGen
                 Mutation = 50,
                 Crossing = 100,
                 StopConditionIndex = 1,
-                ConditionValue = 999999999999999999
+                ConditionValue = 99000000
             };
 
             dataConfiguration.PrintDataConfiguration();
 
-            GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(dataConfiguration.DataContener, genProperty, bag);
-            GeneticAlgorithm geneticAlgorithm2 = new GeneticAlgorithm(dataConfiguration.DataContener, genProperty, bag);
+            double test1 = 0;
+            double test2 = 0;
+
+           // GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(dataConfiguration.DataContener, genProperty, bag, true);
+           // GeneticAlgorithm geneticAlgorithm2 = new GeneticAlgorithm(dataConfiguration.DataContener, genProperty, bag, false);
+            for(int i = 0; i<9; ++i)
+            {
+                GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(dataConfiguration.DataContener, genProperty, bag, true);
+                geneticAlgorithm.RunAlgorithm(ref test1); 
+            }
+
+            for (int i = 0; i < 9; ++i)
+            {
+                GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(dataConfiguration.DataContener, genProperty, bag, false);
+                geneticAlgorithm.RunAlgorithm(ref test2);
+            }
+            test1 /= 9;
+            test2 /= 9;
+            Console.WriteLine("Profit z funkcją ulepszającą:" + test1);
+            Console.WriteLine("Profit bez funkcji ulepszającej:" + test2);
+
+            /*
             Thread thread = new Thread(geneticAlgorithm.RunAlgorithm);
             Thread thread2 = new Thread(geneticAlgorithm2.RunAlgorithm);
             thread.Start();
             thread2.Start();
+            */
             Console.ReadKey();
             
         }

@@ -16,19 +16,22 @@ namespace JGen
         private Individual _bestIndividual;
         private DateTime _start;
         private DateTime _stop;
+        private bool test;
 
         public GeneticAlgorithm()
         {
             _dataList = new List<MyData>();
             _genConfiguration = new GenProperty();
             _bag = new Bag();
+            test = false;
         }
 
-        public GeneticAlgorithm(List <MyData> list, GenProperty gen, Bag bag)
+        public GeneticAlgorithm(List <MyData> list, GenProperty gen, Bag bag, bool test)
         {
             _dataList = new List<MyData>(list);
             _genConfiguration = new GenProperty(gen);
             _bag = new Bag(bag.Weight);
+            this.test = test;
         }
 
         public void CopyData(List <MyData> list)
@@ -99,6 +102,7 @@ namespace JGen
            // _childrenPopulation.PrintPopulation();
 
             _childrenPopulation.RatePopulation(_dataList, _bag.Weight);
+            if (test) { _childrenPopulation.UpgradePopulation(_bag.Weight, _dataList); }
 
             //Console.WriteLine("After Rating");
            // _childrenPopulation.PrintPopulation();
@@ -114,13 +118,14 @@ namespace JGen
             //Console.ReadKey();
         }
 
-        public void RunAlgorithm()
+        public void RunAlgorithm(ref double profit)
         {
             _start = DateTime.Now;
 
             _bestIndividual = new Individual();
             _bestIndividual.Dna.CreateGenome(_dataList);
             _bestIndividual.RateGenome(_dataList, _bag.Weight);
+            if (test) { _bestIndividual.UpdateResult(_bag.Weight, _dataList); }
 
             //_bestIndividual.PrintIndividual();
             //Console.WriteLine();
@@ -152,8 +157,9 @@ namespace JGen
                 case 3: RunWithValue(); break;
             }
             _stop = DateTime.Now;
-            Console.WriteLine("Time: {0}", (_stop - _start).Seconds);
-            _bestIndividual.PrintIndividual();
+          //  Console.WriteLine("Time: {0}", (_stop - _start).Seconds);
+          //  _bestIndividual.PrintIndividual();
+            profit += (_bestIndividual.Value / _bestIndividual.Weight);
         }
     }
 }

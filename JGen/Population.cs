@@ -128,5 +128,13 @@ namespace JGen
                 item.PrintIndividual();
             }
         }
+
+        public void UpgradePopulation(double totalWeight, List<MyData> list)
+        {
+            foreach(Individual item in Individuals)
+            {
+                item.UpdateResult(totalWeight, list); 
+            }
+        }
     }
 }
